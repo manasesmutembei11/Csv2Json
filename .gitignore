@@ -3,3 +3,6 @@
 
 # Ignore the .vs directory (Visual Studio)
 .vs/
+
+.Csv2Json/bin/
+.Csv2Json/obj/
