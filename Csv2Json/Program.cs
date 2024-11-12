@@ -1,53 +1,76 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Formats.Asn1;
-using System.Globalization;
-using System.IO;
+﻿using System.Globalization;
 using Newtonsoft.Json;
 using CsvHelper;
+using CsvHelper.Configuration;
+using Csv2Json;
 
 class Program
 {
-    static void Main()
+    public static void Main()
     {
-        string csvFilePath = "C:\\Users\\Lenovo\\Downloads\\claims.csv";
-        var csvData = ReadCsv(csvFilePath);
-        string jsonData = JsonConvert.SerializeObject(csvData, Formatting.Indented);
-        Console.WriteLine(jsonData);
-    }
-
-    static List<Dictionary<string, string>> ReadCsv(string filePath)
-    {
-        var csvData = new List<Dictionary<string, string>>();
+        var validRecords = new List<ClaimRecord>();
+        var filePath = "C:\\Users\\Lenovo\\Downloads\\claim1.csv";
 
         using (var reader = new StreamReader(filePath))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture) { HeaderValidated = null, MissingFieldFound = null }))
         {
             csv.Read();
             csv.ReadHeader();
 
-            if (csv.HeaderRecord == null)
-            {
-                Console.WriteLine("The CSV file is missing headers.");
-                return csvData;
-            }
-
             while (csv.Read())
             {
-                var row = new Dictionary<string, string>();
-                foreach (var header in csv.HeaderRecord)
+                try
                 {
-                    if (header == null) continue;
+                    var record = new ClaimRecord
+                    {
+                        Payroll = Validation.ValidateString(csv.GetField("PAYROLL")),
+                        ClaimantName = Validation.ValidateString(csv.GetField("CLAIMANT'S NAME")),
+                        IdNumber = Validation.ValidateString(csv.GetField("ID NUMBER")),
+                        DateOfLoss = Validation.ValidateDate(csv.GetField("DATE OF LOSS")),
+                        IntimationDate = Validation.ValidateDate(csv.GetField("INTIMATION DATE")),
+                        BritamClaimNo = Validation.ValidateString(csv.GetField("BRITAM CLAIM NO.")),
+                        NatureOfLoss = Validation.ValidateString(csv.GetField("NATURE OF LOSS")),
+                        Scheme = Validation.ValidateString(csv.GetField("SCHEME")),
+                        NatureOfInjury = Validation.ValidateString(csv.GetField("NATURE OF INJURY")),
+                        Service = Validation.ValidateString(csv.GetField("SERVICE")),
+                        OriginalReserve = Validation.ValidateDecimal(csv.GetField("Original reserve")),
+                        TotalPaid = Validation.ValidateDecimal(csv.GetField("TOTAL PAID")),
+                        PaidToService = Validation.ValidateDecimal(csv.GetField("PAID TO SERVICE")),
+                        DoctorsFee = Validation.ValidateDecimal(csv.GetField("DOCTORS' FEE")),
+                        PTD = Validation.ValidateDecimal(csv.GetField("PTD")),
+                        TTD = Validation.ValidateDecimal(csv.GetField("TTD")),
+                        OccupationalDisease = Validation.ValidateDecimal(csv.GetField("OCCUPATIONAL DISEAS")),
+                        DeathFee = Validation.ValidateDecimal(csv.GetField("DEATH")),
+                        MedicalFee = Validation.ValidateDecimal(csv.GetField("MEDICAL FEES")),
+                        CurrentOs = Validation.ValidateDecimal(csv.GetField("CURRENT OS")),
+                        IncurredLessDF = Validation.ValidateDecimal(csv.GetField("Incurred less doctor's fee")),
+                        IncurredAmount = Validation.ValidateDecimal(csv.GetField("Incurred Amount (Paid+OS)")),
+                        DocumentationStatus = Validation.ValidateString(csv.GetField("Documentation Status")),
+                        PaymentStatus = Validation.ValidateString(csv.GetField("PAYMENT STATUS")),
+                        EndToEndTAT = Validation.ValidateString(csv.GetField("END TO END TAT")),
+                        DateFullyDocumented = Validation.ValidateDate(csv.GetField("DATE FULLY DOCUMENTED")),
+                        DocumentationTAT = Validation.ValidateString(csv.GetField("Documentation TAT")),
+                        DvIssueDate = Validation.ValidateDate(csv.GetField("DV ISSUED DATE")),
+                        DvIssueTAT = Validation.ValidateString(csv.GetField("DV ISSUE TAT")),
+                        DvReceiveDate = Validation.ValidateDate(csv.GetField("DV RECEIVED DATE")),
+                        DatePaid = Validation.ValidateDate(csv.GetField("date paid/declined")),
+                        DateRemitted = Validation.ValidateDate(csv.GetField("DATE REMITTED")),
+                        TATFinance = Validation.ValidateString(csv.GetField("TAT FINANCE")),
+                        PaymentRequisitionNo = Validation.ValidateString(csv.GetField("payment requisition no.")),
+                        Station = Validation.ValidateString(csv.GetField("STATION")),
+                    };
 
-                    string value = csv.GetField(header);
-                    row[header] = value ?? "";
+                    validRecords.Add(record);
                 }
-                csvData.Add(row);
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Validation error: {ex.Message}");
+                }
             }
         }
 
-        return csvData;
+        var json = JsonConvert.SerializeObject(validRecords, Formatting.Indented);
+        Console.WriteLine(json);
     }
-
 }
 
