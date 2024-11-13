@@ -14,7 +14,7 @@ namespace Csv2Json
         public DateTime? DateOfLoss { get; set; }
         public DateTime? IntimationDate { get; set; }
 
-        public string BritamClaimNo { get; set; }
+        public string ClaimNo { get; set; }
         public string NatureOfLoss { get; set; }
         public string Scheme { get; set; }
         public string NatureOfInjury {  get; set; }

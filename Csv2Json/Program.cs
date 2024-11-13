@@ -8,8 +8,8 @@ class Program
 {
     public static void Main()
     {
-        var validRecords = new List<ClaimRecord>();
-        var filePath = "C:\\Users\\Lenovo\\Downloads\\claim1.csv";
+        var validRecords = new List<ExpaqClaim>();
+        var filePath = "C:\\Users\\Lenovo\\Downloads\\Expaqmate_Claims.csv";
 
         using (var reader = new StreamReader(filePath))
         using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture) { HeaderValidated = null, MissingFieldFound = null }))
@@ -21,43 +21,27 @@ class Program
             {
                 try
                 {
-                    var record = new ClaimRecord
+                    var record = new ExpaqClaim
                     {
-                        Payroll = Validation.ValidateString(csv.GetField("PAYROLL")),
-                        ClaimantName = Validation.ValidateString(csv.GetField("CLAIMANT'S NAME")),
-                        IdNumber = Validation.ValidateString(csv.GetField("ID NUMBER")),
-                        DateOfLoss = Validation.ValidateDate(csv.GetField("DATE OF LOSS")),
-                        IntimationDate = Validation.ValidateDate(csv.GetField("INTIMATION DATE")),
-                        BritamClaimNo = Validation.ValidateString(csv.GetField("BRITAM CLAIM NO.")),
-                        NatureOfLoss = Validation.ValidateString(csv.GetField("NATURE OF LOSS")),
-                        Scheme = Validation.ValidateString(csv.GetField("SCHEME")),
-                        NatureOfInjury = Validation.ValidateString(csv.GetField("NATURE OF INJURY")),
-                        Service = Validation.ValidateString(csv.GetField("SERVICE")),
-                        OriginalReserve = Validation.ValidateDecimal(csv.GetField("Original reserve")),
-                        TotalPaid = Validation.ValidateDecimal(csv.GetField("TOTAL PAID")),
-                        PaidToService = Validation.ValidateDecimal(csv.GetField("PAID TO SERVICE")),
-                        DoctorsFee = Validation.ValidateDecimal(csv.GetField("DOCTORS' FEE")),
-                        PTD = Validation.ValidateDecimal(csv.GetField("PTD")),
-                        TTD = Validation.ValidateDecimal(csv.GetField("TTD")),
-                        OccupationalDisease = Validation.ValidateDecimal(csv.GetField("OCCUPATIONAL DISEAS")),
-                        DeathFee = Validation.ValidateDecimal(csv.GetField("DEATH")),
-                        MedicalFee = Validation.ValidateDecimal(csv.GetField("MEDICAL FEES")),
-                        CurrentOs = Validation.ValidateDecimal(csv.GetField("CURRENT OS")),
-                        IncurredLessDF = Validation.ValidateDecimal(csv.GetField("Incurred less doctor's fee")),
-                        IncurredAmount = Validation.ValidateDecimal(csv.GetField("Incurred Amount (Paid+OS)")),
-                        DocumentationStatus = Validation.ValidateString(csv.GetField("Documentation Status")),
-                        PaymentStatus = Validation.ValidateString(csv.GetField("PAYMENT STATUS")),
-                        EndToEndTAT = Validation.ValidateString(csv.GetField("END TO END TAT")),
-                        DateFullyDocumented = Validation.ValidateDate(csv.GetField("DATE FULLY DOCUMENTED")),
-                        DocumentationTAT = Validation.ValidateString(csv.GetField("Documentation TAT")),
-                        DvIssueDate = Validation.ValidateDate(csv.GetField("DV ISSUED DATE")),
-                        DvIssueTAT = Validation.ValidateString(csv.GetField("DV ISSUE TAT")),
-                        DvReceiveDate = Validation.ValidateDate(csv.GetField("DV RECEIVED DATE")),
-                        DatePaid = Validation.ValidateDate(csv.GetField("date paid/declined")),
-                        DateRemitted = Validation.ValidateDate(csv.GetField("DATE REMITTED")),
-                        TATFinance = Validation.ValidateString(csv.GetField("TAT FINANCE")),
-                        PaymentRequisitionNo = Validation.ValidateString(csv.GetField("payment requisition no.")),
-                        Station = Validation.ValidateString(csv.GetField("STATION")),
+                        DocumentType = Validation.ValidateString(csv.GetField("DOCUMENT TYPE")),
+                        DateFiled = Validation.ValidateDate(csv.GetField("DATE FILED")),
+                        DateReceived = Validation.ValidateDate(csv.GetField("DATE RECEIVED")),
+                        CourtStation = Validation.ValidateString(csv.GetField("COURT STATION")),
+                        Rank = Validation.ValidateString(csv.GetField("RANK")),
+                        CaseNo = Validation.ValidateString(csv.GetField("CASE NO")),
+                        Year = Validation.ValidateString(csv.GetField("YEAR")),
+                        Plaintiff = Validation.ValidateString(csv.GetField("PLAINTIFF")),
+                        Defendant = Validation.ValidateString(csv.GetField("DEFENDANT")),
+                        ThirdPartyAdvocate = Validation.ValidateString(csv.GetField("THIRD PARTY ADVOCATE")),
+                        InjuryType = Validation.ValidateString(csv.GetField("INJURY TYPE")),
+                        LossDate = Validation.ValidateDate(csv.GetField("LOSS DATE")),
+                        InsuredMV = Validation.ValidateString(csv.GetField("INSURED M/V")),
+                        ClaimNo = Validation.ValidateString(csv.GetField("CLAIM NUMBER")),
+                        Region = Validation.ValidateString(csv.GetField("REGION")),
+                        OurAdvocate = Validation.ValidateString(csv.GetField("OUR ADVOCATE")),
+
+
+
                     };
 
                     validRecords.Add(record);

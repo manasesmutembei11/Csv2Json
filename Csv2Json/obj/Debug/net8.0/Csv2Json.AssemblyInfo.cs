@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Csv2Json")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26b2ec31b42007e0a8d92c7c2b83a6ef8d36c584")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23e1c63b6334d0f2db85a9cb8931affadfcd11a5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Csv2Json")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Csv2Json")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
