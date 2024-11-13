@@ -9,7 +9,7 @@ class Program
     public static void Main()
     {
         var validRecords = new List<ExpaqClaim>();
-        var filePath = "C:\\Users\\Lenovo\\Downloads\\Expaqmate_Claims.csv";
+        var filePath = "";
 
         using (var reader = new StreamReader(filePath))
         using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture) { HeaderValidated = null, MissingFieldFound = null }))
@@ -39,9 +39,6 @@ class Program
                         ClaimNo = Validation.ValidateString(csv.GetField("CLAIM NUMBER")),
                         Region = Validation.ValidateString(csv.GetField("REGION")),
                         OurAdvocate = Validation.ValidateString(csv.GetField("OUR ADVOCATE")),
-
-
-
                     };
 
                     validRecords.Add(record);
